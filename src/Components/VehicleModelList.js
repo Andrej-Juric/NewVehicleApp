@@ -16,7 +16,20 @@ const VehicleModelList = () => {
   };
 
   const RemoveModelFunction = (id) => {
-    navigate("/make/detail/" + id);
+    if (window.confirm("Do you really want to delete this Model?!")) {
+      fetch("https://api.baasic.com/v1/sata/resources/VehicleModel2/" + id, {
+        method: "DELETE",
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+          "Content-Type": "application/json",
+        },
+        //body: JSON.stringify(makeData),
+      }).then((resp) => {
+        alert("Removed successfully");
+        window.location.reload();
+      });
+    }
+    //navigate("/make/detail/" + id);
   };
 
   // api poziv za model automobila // api call for vehicle model
@@ -79,7 +92,14 @@ const VehicleModelList = () => {
                           >
                             Edit
                           </a>
-                          <a className="btn btn-danger">Remove</a>
+                          <a
+                            onClick={() => {
+                              RemoveModelFunction(model.id);
+                            }}
+                            className="btn btn-danger"
+                          >
+                            Remove
+                          </a>
                           <a
                             onClick={() => {
                               LoadModelDetail(model.id);

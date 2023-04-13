@@ -17,7 +17,21 @@ const VehicleMakeList = () => {
   };
 
   const RemoveFunction = (id) => {
-    navigate("/make/remove/" + id);
+    if (window.confirm("Do you really want to delete this Vehicle?")) {
+      fetch("https://api.baasic.com/v1/sata/resources/vehicleMakes/" + id, {
+        method: "DELETE",
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+          "Content-Type": "application/json",
+        },
+        //body: JSON.stringify(makeData),
+      }).then((resp) => {
+        alert("Removed successfully");
+        window.location.reload();
+      });
+    }
+
+    //navigate("/make/remove/" + id);
   };
 
   // api poziv za marke automobila // api call for vehicle make
