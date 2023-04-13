@@ -9,15 +9,15 @@ const VehicleMakeList = () => {
 
   // funckije
   const LoadDetail = (id) => {
-    navigate("/make/detail/:makeid" + id);
+    navigate("/make/detail/" + id);
   };
 
   const LoadEdit = (id) => {
-    navigate("/make/edit/:makeid");
+    navigate("/make/edit/" + id);
   };
 
   const RemoveFunction = (id) => {
-    navigate("/make/detail/:makeid");
+    navigate("/make/remove/" + id);
   };
 
   // api poziv za marke automobila // api call for vehicle make

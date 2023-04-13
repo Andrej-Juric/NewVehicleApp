@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const VehicleModelList = () => {
   //const [makes, setMakes] = useState("");
   const [models, setModels] = useState("");
+  const navigate = useNavigate();
+
+  // funckije
+  const LoadModelDetail = (id) => {
+    navigate("/model/detail/" + id);
+  };
+
+  const LoadModelEdit = (id) => {
+    navigate("/make/edit/" + id);
+  };
+
+  const RemoveModelFunction = (id) => {
+    navigate("/make/detail/" + id);
+  };
 
   // api poziv za model automobila // api call for vehicle model
   useEffect(() => {
@@ -59,7 +73,14 @@ const VehicleModelList = () => {
                         <td>
                           <a className="btn btn-success">Edit</a>
                           <a className="btn btn-danger">Remove</a>
-                          <a className="btn btn-primary">Details</a>
+                          <a
+                            onClick={() => {
+                              LoadModelDetail(model.id);
+                            }}
+                            className="btn btn-primary"
+                          >
+                            Details
+                          </a>
                         </td>
                       </tr>
                     ))}

@@ -6,6 +6,7 @@ import CreateMake from "./Components/CreateMake";
 import DetailsMake from "./Components/DetailsMake";
 import EditMake from "./Components/EditMake";
 import CreateModel from "./Components/CreateModel";
+import DetailsModel from "./Components/DetailsModel";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
           <Route path="/make/create" element={<CreateMake />}></Route>
           <Route path="/model/create" element={<CreateModel />}></Route>
           <Route path="/make/detail/:makeid" element={<DetailsMake />}></Route>
+          <Route
+            path="/model/detail/:modelid"
+            element={<DetailsModel />}
+          ></Route>
           <Route path="/make/edit/:makeid" element={<EditMake />}></Route>
         </Routes>
       </BrowserRouter>
