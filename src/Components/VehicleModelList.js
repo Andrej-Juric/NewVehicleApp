@@ -12,7 +12,7 @@ const VehicleModelList = () => {
   };
 
   const LoadModelEdit = (id) => {
-    navigate("/make/edit/" + id);
+    navigate("/model/edit/" + id);
   };
 
   const RemoveModelFunction = (id) => {
@@ -71,7 +71,14 @@ const VehicleModelList = () => {
                         <td>{model.fuel_type}</td>
                         <td>{model.wheel_type}</td>
                         <td>
-                          <a className="btn btn-success">Edit</a>
+                          <a
+                            onClick={() => {
+                              LoadModelEdit(model.id);
+                            }}
+                            className="btn btn-success"
+                          >
+                            Edit
+                          </a>
                           <a className="btn btn-danger">Remove</a>
                           <a
                             onClick={() => {

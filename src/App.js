@@ -5,6 +5,7 @@ import VehicleModelList from "./Components/VehicleModelList";
 import CreateMake from "./Components/CreateMake";
 import DetailsMake from "./Components/DetailsMake";
 import EditMake from "./Components/EditMake";
+import EditModel from "./Components/EditModel";
 import CreateModel from "./Components/CreateModel";
 import DetailsModel from "./Components/DetailsModel";
 
@@ -31,6 +32,7 @@ function App() {
             element={<DetailsModel />}
           ></Route>
           <Route path="/make/edit/:makeid" element={<EditMake />}></Route>
+          <Route path="/model/edit/:modelid" element={<EditModel />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
