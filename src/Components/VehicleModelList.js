@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const VehicleModelList = () => {
   //const [makes, setMakes] = useState("");
@@ -63,6 +64,7 @@ const VehicleModelList = () => {
                   Add new model (+)
                 </Link>
               </div>
+              <SearchBar></SearchBar>
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>

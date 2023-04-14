@@ -13,7 +13,6 @@ import SearchBar from "./Components/SearchBar";
 function App() {
   return (
     <>
-      <SearchBar></SearchBar>
       <div className="App">
         <h1>Vehicle App</h1>
         <BrowserRouter>

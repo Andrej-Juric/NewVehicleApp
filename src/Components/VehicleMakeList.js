@@ -1,11 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const VehicleMakeList = () => {
   const [makes, setMakes] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
-  //const [models, setModels] = useState("");
+  const handleReset = () => {
+    fetch("https://api.baasic.com/v1/sata/resources/vehicleMakes", {
+      headers: {
+        "X-BAASIC-API-KEY": "sata",
+      },
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setMakes(resp.item);
+        setSearchResults([]);
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const handleSearch = (value) => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?searchQuery=${value}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        setMakes(resp.item);
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   // funckije
   const LoadDetail = (id) => {
@@ -65,6 +103,11 @@ const VehicleMakeList = () => {
                   Add new make (+)
                 </Link>
               </div>
+              <SearchBar
+                onSearch={handleSearch}
+                onReset={handleReset}
+              ></SearchBar>
+
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>
