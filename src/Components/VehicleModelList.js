@@ -6,6 +6,46 @@ const VehicleModelList = () => {
   //const [makes, setMakes] = useState("");
   const [models, setModels] = useState("");
   const navigate = useNavigate();
+  const [searchResults, setSearchResults] = useState([]);
+  // funkcije search i reset
+
+  const handleReset = () => {
+    fetch("https://api.baasic.com/v1/sata/resources/VehicleModel2/", {
+      headers: {
+        "X-BAASIC-API-KEY": "sata",
+      },
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setModels(resp.item);
+        setSearchResults([]);
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const handleSearch = (value) => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2/?searchQuery=${value}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        setModels(resp.item);
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   // funckije
   const LoadModelDetail = (id) => {
@@ -64,7 +104,10 @@ const VehicleModelList = () => {
                   Add new model (+)
                 </Link>
               </div>
-              <SearchBar></SearchBar>
+              <SearchBar
+                onSearch={handleSearch}
+                onReset={handleReset}
+              ></SearchBar>
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>

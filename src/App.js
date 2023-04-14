@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import VehicleMakeList from "./Components/VehicleMakeList";
 import VehicleModelList from "./Components/VehicleModelList";
@@ -11,37 +12,44 @@ import DetailsModel from "./Components/DetailsModel";
 import SearchBar from "./Components/SearchBar";
 
 function App() {
+  const [isShowingMakes, setIsShowingMakes] = useState(true);
+
   return (
-    <>
-      <div className="App">
-        <h1>Vehicle App</h1>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <VehicleMakeList />
-                  <VehicleModelList />
-                </>
-              }
-            ></Route>
-            <Route path="/make/create" element={<CreateMake />}></Route>
-            <Route path="/model/create" element={<CreateModel />}></Route>
-            <Route
-              path="/make/detail/:makeid"
-              element={<DetailsMake />}
-            ></Route>
-            <Route
-              path="/model/detail/:modelid"
-              element={<DetailsModel />}
-            ></Route>
-            <Route path="/make/edit/:makeid" element={<EditMake />}></Route>
-            <Route path="/model/edit/:modelid" element={<EditModel />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </>
+    <div className="App">
+      <h1>Vehicle App</h1>
+      <button
+        onClick={() => setIsShowingMakes(true)}
+        className="btn btn-success"
+      >
+        Show Makes
+      </button>
+      <button
+        onClick={() => setIsShowingMakes(false)}
+        className="btn btn-success"
+      >
+        Show Models
+      </button>
+      <BrowserRouter>
+        <Routes>
+          {isShowingMakes && (
+            <>
+              <Route path="/" element={<VehicleMakeList />} />
+              <Route path="/make/create" element={<CreateMake />} />
+              <Route path="/make/detail/:makeid" element={<DetailsMake />} />
+              <Route path="/make/edit/:makeid" element={<EditMake />} />
+            </>
+          )}
+          {!isShowingMakes && (
+            <>
+              <Route path="/" element={<VehicleModelList />} />
+              <Route path="/model/create" element={<CreateModel />} />
+              <Route path="/model/detail/:modelid" element={<DetailsModel />} />
+              <Route path="/model/edit/:modelid" element={<EditModel />} />
+            </>
+          )}
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
