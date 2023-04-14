@@ -7,6 +7,33 @@ const VehicleModelList = () => {
   const [models, setModels] = useState("");
   const navigate = useNavigate();
   const [searchResults, setSearchResults] = useState([]);
+  const [sortValue, setSortValue] = useState("");
+  const sortOption = ["name"];
+
+  // funkcija za sort
+
+  // handleSort funkcija
+  const handleSort = (sortOrder) => {
+    setSortValue(sortOrder);
+    const sortParam = `name|${sortOrder}`;
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?sort=${sortParam}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        setModels(resp.item);
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   // funkcije search i reset
 
   const handleReset = () => {
@@ -108,6 +135,24 @@ const VehicleModelList = () => {
                 onSearch={handleSearch}
                 onReset={handleReset}
               ></SearchBar>
+              <button
+                onClick={() => handleSort("asc")}
+                className="btn btn-success"
+              >
+                Sort Ascending
+              </button>
+              <button
+                onClick={() => handleSort("desc")}
+                className="btn btn-success"
+              >
+                Sort Descending
+              </button>
+
+              {sortOption.map((item, index) => (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              ))}
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>
@@ -115,8 +160,7 @@ const VehicleModelList = () => {
                     <td>Abrv:</td>
                     <td>Fuel type:</td>
                     <td>Wheel drive:</td>
-                    <td>id:</td>
-                    <td>Make id:</td>
+                    <td>Buttons</td>
                   </tr>
                 </thead>
                 <tbody>

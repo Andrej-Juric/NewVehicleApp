@@ -1,6 +1,16 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 0.05em;
+}
+
 .divbtn {
   float: left;
+  margin-right: 10px;
 }
+/*.divbtn:hover {
+  transition: 0.8s;
+  transform: scale(1.1);
+}*/
 
 ul {
   list-style-type: none;
@@ -9,8 +19,23 @@ ul {
 }
 
 li {
-  font-family: Arial, sans-serif;
+  /*font-family: Arial, sans-serif;*/
   font-size: 16px;
   color: #333;
   margin-bottom: 10px;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }

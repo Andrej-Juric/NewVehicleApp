@@ -5,6 +5,8 @@ import SearchBar from "./SearchBar";
 const VehicleMakeList = () => {
   const [makes, setMakes] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [sortValue, setSortValue] = useState("");
+  const sortOption = ["name"];
   const navigate = useNavigate();
 
   const handleReset = () => {
@@ -29,6 +31,28 @@ const VehicleMakeList = () => {
   const handleSearch = (value) => {
     fetch(
       `https://api.baasic.com/v1/sata/resources/vehicleMakes?searchQuery=${value}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        setMakes(resp.item);
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  // handleSort funkcija
+  const handleSort = (sortOrder) => {
+    setSortValue(sortOrder);
+    const sortParam = `name|${sortOrder}`;
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?sort=${sortParam}`,
       {
         headers: {
           "X-BAASIC-API-KEY": "sata",
@@ -108,49 +132,70 @@ const VehicleMakeList = () => {
                 onReset={handleReset}
               ></SearchBar>
 
+              <button
+                onClick={() => handleSort("asc")}
+                className="btn btn-success"
+              >
+                Sort Ascending
+              </button>
+              <button
+                onClick={() => handleSort("desc")}
+                className="btn btn-success"
+              >
+                Sort Descending
+              </button>
+
+              {sortOption.map((item, index) => (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              ))}
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>
                     <td>Name:</td>
                     <td>Abr:</td>
+                    <td>Buttons</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {makes &&
-                    makes.length > 0 &&
-                    makes.map((make) => (
-                      <tr key={make.id}>
-                        <td>{make.name}</td>
-                        <td>{make.abbreviation}</td>
+                  <React.Fragment>
+                    {makes &&
+                      makes.length > 0 &&
+                      makes.map((make) => (
+                        <tr key={make.id}>
+                          <td>{make.name}</td>
+                          <td>{make.abbreviation}</td>
 
-                        <td>
-                          <a
-                            onClick={() => {
-                              LoadEdit(make.id);
-                            }}
-                            className="btn btn-success"
-                          >
-                            Edit
-                          </a>
-                          <a
-                            onClick={() => {
-                              RemoveFunction(make.id);
-                            }}
-                            className="btn btn-danger"
-                          >
-                            Remove
-                          </a>
-                          <a
-                            onClick={() => {
-                              LoadDetail(make.id);
-                            }}
-                            className="btn btn-primary"
-                          >
-                            Details
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                          <td>
+                            <a
+                              onClick={() => {
+                                LoadEdit(make.id);
+                              }}
+                              className="btn btn-success"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => {
+                                RemoveFunction(make.id);
+                              }}
+                              className="btn btn-danger"
+                            >
+                              Remove
+                            </a>
+                            <a
+                              onClick={() => {
+                                LoadDetail(make.id);
+                              }}
+                              className="btn btn-primary"
+                            >
+                              Details
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                  </React.Fragment>
                 </tbody>
               </table>
             </div>
