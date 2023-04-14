@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { BiArrowToBottom } from "react-icons/bi";
+import { BiArrowToTop } from "react-icons/bi";
 
 const VehicleMakeList = () => {
   const [makes, setMakes] = useState("");
@@ -132,28 +134,13 @@ const VehicleMakeList = () => {
                 onReset={handleReset}
               ></SearchBar>
 
-              <button
-                onClick={() => handleSort("asc")}
-                className="btn btn-success"
-              >
-                Sort Ascending
-              </button>
-              <button
-                onClick={() => handleSort("desc")}
-                className="btn btn-success"
-              >
-                Sort Descending
-              </button>
-
-              {sortOption.map((item, index) => (
-                <option value={item} key={index}>
-                  {item}
-                </option>
-              ))}
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>
-                    <td>Name:</td>
+                    <td>
+                      Name <BiArrowToBottom onClick={() => handleSort("asc")} />
+                      <BiArrowToTop onClick={() => handleSort("desc")} />
+                    </td>
                     <td>Abr:</td>
                     <td>Buttons</td>
                   </tr>

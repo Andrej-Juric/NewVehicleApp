@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { BiArrowToBottom } from "react-icons/bi";
+import { BiArrowToTop } from "react-icons/bi";
 
 const VehicleModelList = () => {
   //const [makes, setMakes] = useState("");
@@ -27,6 +29,33 @@ const VehicleModelList = () => {
       .then((res) => res.json())
       .then((resp) => {
         setModels(resp.item);
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  // handleFilter funkcija
+
+  const handleFilter = (fuelType) => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?fuel_type=${fuelType}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        let filteredModels = resp.item.filter((model) => {
+          return (
+            model.fuel_type != null &&
+            model.fuel_type.toLowerCase() === fuelType.toLowerCase()
+          );
+        });
+        setModels(filteredModels);
         console.log(resp);
       })
       .catch((error) => {
@@ -136,70 +165,72 @@ const VehicleModelList = () => {
                 onReset={handleReset}
               ></SearchBar>
               <button
-                onClick={() => handleSort("asc")}
-                className="btn btn-success"
+                className="btn btn-primary"
+                style={{ margin: "10px 10px " }}
+                onClick={() => handleFilter("diesel")}
               >
-                Sort Ascending
+                Show diesel models
               </button>
               <button
-                onClick={() => handleSort("desc")}
-                className="btn btn-success"
+                className="btn btn-primary"
+                style={{ margin: "10px 10px" }}
+                onClick={() => handleFilter("petrol")}
               >
-                Sort Descending
+                Show petrol models
               </button>
 
-              {sortOption.map((item, index) => (
-                <option value={item} key={index}>
-                  {item}
-                </option>
-              ))}
               <table className="table table-bordered">
                 <thead className="bg-dark text-white">
                   <tr>
-                    <td>Name:</td>
-                    <td>Abrv:</td>
-                    <td>Fuel type:</td>
-                    <td>Wheel drive:</td>
+                    <td>
+                      Name <BiArrowToBottom onClick={() => handleSort("asc")} />
+                      <BiArrowToTop onClick={() => handleSort("desc")} />
+                    </td>
+                    <td>Abrv</td>
+                    <td>Fuel type</td>
+                    <td>Wheel drive</td>
                     <td>Buttons</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {models &&
-                    models.length > 0 &&
-                    models.map((model) => (
-                      <tr key={model.id}>
-                        <td>{model.name}</td>
-                        <td>{model.abbreviation}</td>
-                        <td>{model.fuel_type}</td>
-                        <td>{model.wheel_type}</td>
-                        <td>
-                          <a
-                            onClick={() => {
-                              LoadModelEdit(model.id);
-                            }}
-                            className="btn btn-success"
-                          >
-                            Edit
-                          </a>
-                          <a
-                            onClick={() => {
-                              RemoveModelFunction(model.id);
-                            }}
-                            className="btn btn-danger"
-                          >
-                            Remove
-                          </a>
-                          <a
-                            onClick={() => {
-                              LoadModelDetail(model.id);
-                            }}
-                            className="btn btn-primary"
-                          >
-                            Details
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                  <React.Fragment>
+                    {models &&
+                      models.length > 0 &&
+                      models.map((model) => (
+                        <tr key={model.id}>
+                          <td>{model.name}</td>
+                          <td>{model.abbreviation}</td>
+                          <td>{model.fuel_type}</td>
+                          <td>{model.wheel_type}</td>
+                          <td>
+                            <a
+                              onClick={() => {
+                                LoadModelEdit(model.id);
+                              }}
+                              className="btn btn-success"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => {
+                                RemoveModelFunction(model.id);
+                              }}
+                              className="btn btn-danger"
+                            >
+                              Remove
+                            </a>
+                            <a
+                              onClick={() => {
+                                LoadModelDetail(model.id);
+                              }}
+                              className="btn btn-primary"
+                            >
+                              Details
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                  </React.Fragment>
                 </tbody>
               </table>
             </div>
