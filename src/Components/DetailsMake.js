@@ -25,23 +25,64 @@ const DetailsMake = () => {
       });
   }, [makeid]);
   return (
-    <div>
-      <div className="card" style={{ textAlign: "left" }}>
-        <div className="card-title">
-          <h2>Vehicle details</h2>
+    <div className="row">
+      <div className="offset-lg-3 col-lg-6">
+        <div className="card" style={{ textAlign: "left" }}>
+          <div className="card-title">
+            <h2>Vehicle details</h2>
+          </div>
+          <div className="card-body">
+            <div className="form-group row">
+              <label htmlFor="id" className="col-sm-3 col-form-label">
+                ID
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="id"
+                  value={makeData.id}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="name" className="col-sm-3 col-form-label">
+                Name
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="name"
+                  value={makeData.name}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="abbreviation" className="col-sm-3 col-form-label">
+                Abbreviation
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="abbreviation"
+                  value={makeData.abbreviation}
+                />
+              </div>
+            </div>
+          </div>
+          {makeData && (
+            <div className="card-footer">
+              <Link to="/" className="btn btn-danger mr-3">
+                HOME PAGE
+              </Link>
+            </div>
+          )}
         </div>
-        <div className="card-body"></div>
-        {makeData && (
-          <button className="btn btn-danger" style={{ maxWidth: "20vh" }}>
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-              HOME PAGE
-            </Link>
-          </button>
-        )}
-        <h3>
-          Vehicle name is: {makeData.name} ({makeData.id})
-        </h3>
-        <h3>Vehicle abbreviation: {makeData.abbreviation}</h3>
       </div>
     </div>
   );

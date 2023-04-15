@@ -19,6 +19,7 @@ function SearchBar({ onSearch, onReset }) {
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        placeholder="Search vehicles ..."
       />
       <button className="btn btn-primary" type="submit">
         Search
