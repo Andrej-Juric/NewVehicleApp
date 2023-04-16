@@ -11,12 +11,69 @@ const VehicleMakeList = () => {
   const sortOption = ["name"];
   const navigate = useNavigate();
 
+  // pageing
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // handlePageChange funkcija
+  const handlePageChange = (pageNumber) => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?page=${pageNumber}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setMakes(resp.item);
+        setCurrentPage(pageNumber);
+        setTotalPages(resp.totalPages);
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  // useEffect za dohvaćanje podataka pri inicijalizaciji komponente
+  useEffect(() => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?page=${currentPage}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setMakes(resp.item);
+        console.log(resp.item);
+        console.log(resp);
+        setTotalPages(resp.totalPages);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  // handleReset funkcija
   const handleReset = () => {
-    fetch("https://api.baasic.com/v1/sata/resources/vehicleMakes", {
-      headers: {
-        "X-BAASIC-API-KEY": "sata",
-      },
-    })
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?page=${currentPage}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
       .then((resp) => {
         return resp.json();
       })
@@ -52,9 +109,10 @@ const VehicleMakeList = () => {
   // handleSort funkcija
   const handleSort = (sortOrder) => {
     setSortValue(sortOrder);
+    setCurrentPage(1);
     const sortParam = `name|${sortOrder}`;
     fetch(
-      `https://api.baasic.com/v1/sata/resources/vehicleMakes?sort=${sortParam}`,
+      `https://api.baasic.com/v1/sata/resources/vehicleMakes?sort=${sortParam}&page=${currentPage}&rpp=${itemsPerPage}`,
       {
         headers: {
           "X-BAASIC-API-KEY": "sata",
@@ -70,6 +128,11 @@ const VehicleMakeList = () => {
         console.log(error.message);
       });
   };
+  useEffect(() => {
+    if (sortValue !== "") {
+      handleSort(sortValue);
+    }
+  }, [sortValue]);
 
   // funckije
   const LoadDetail = (id) => {
@@ -97,7 +160,7 @@ const VehicleMakeList = () => {
 
     //navigate("/make/remove/" + id);
   };
-
+  /*
   // api poziv za marke automobila // api call for vehicle make
   useEffect(() => {
     fetch("https://api.baasic.com/v1/sata/resources/vehicleMakes", {
@@ -116,7 +179,7 @@ const VehicleMakeList = () => {
         console.log(err.message);
       });
   }, []);
-
+*/
   return (
     <div>
       <div className="container">
@@ -184,6 +247,18 @@ const VehicleMakeList = () => {
                       ))}
                   </React.Fragment>
                 </tbody>
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
               </table>
             </div>
           </div>
