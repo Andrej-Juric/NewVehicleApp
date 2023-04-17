@@ -25,25 +25,92 @@ const DetailsModel = () => {
       });
   }, [modelid]);
   return (
-    <div>
-      <div className="card" style={{ textAlign: "left" }}>
-        <div className="card-title">
-          <h2>Vehicle details</h2>
+    <div className="row">
+      <div className="offset-lg-3 col-lg-6">
+        <div className="card" style={{ textAlign: "left" }}>
+          <div className="card-title">
+            <h2>Vehicle details</h2>
+          </div>
+          <div className="card-body">
+            <div className="form-group row">
+              <label htmlFor="id" className="col-sm-3 col-form-label">
+                ID
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="id"
+                  value={modelData.id}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="name" className="col-sm-3 col-form-label">
+                Name
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="name"
+                  value={modelData.name}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="abbreviation" className="col-sm-3 col-form-label">
+                Abbreviation
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="abbreviation"
+                  value={modelData.abbreviation}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="fuelType" className="col-sm-3 col-form-label">
+                Fuel Type
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="fuelType"
+                  value={modelData.fuel_type}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="wheelDrive" className="col-sm-3 col-form-label">
+                Wheel Drive
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="wheelDrive"
+                  value={modelData.wheel_type}
+                />
+              </div>
+            </div>
+          </div>
+          {modelData && (
+            <div className="card-footer">
+              <Link to="/" className="btn btn-danger mr-3">
+                HOME PAGE
+              </Link>
+            </div>
+          )}
         </div>
-        <div className="card-body"></div>
-        {modelData && (
-          <button className="btn btn-danger" style={{ maxWidth: "20vh" }}>
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-              HOME PAGE
-            </Link>
-          </button>
-        )}
-        <h3>
-          Vehicle model name is: {modelData.name} ({modelData.id})
-        </h3>
-        <h3>Vehicle abbreviation: {modelData.abbreviation}</h3>
-        <h3>Vehicle fuel type: {modelData.fuel_type}</h3>
-        <h3>Vehicle wheel drive: {modelData.wheel_type}</h3>
       </div>
     </div>
   );

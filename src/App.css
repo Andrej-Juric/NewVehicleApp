@@ -27,6 +27,21 @@ li {
 
 .btn {
   margin-right: 10px;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+.btn:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 input[type="text"] {
@@ -38,4 +53,91 @@ input[type="text"] {
   box-sizing: border-box;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+table {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  margin: 10px 0;
+  width: 100%;
+}
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+tr:not(:first-of-type):hover {
+  background-color: #f5f5f5;
+}
+
+thead tr {
+  box-shadow: inset 0px -1px 0px #e4e4e4;
+  text-shadow: 0px 1px 1px #fff;
+}
+/* next and previous buttons */
+.pagination-buttons button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+}
+
+.pagination-buttons button:hover {
+  background-color: #3e8e41;
+}
+/* titles */
+h1 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 20px 0;
+  padding: 10px;
+  color: #333;
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 10px 0;
+  padding: 10px;
+  color: #333;
+  letter-spacing: 2px;
+}
+
+/* copyright*/
+.bottom {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.bottom p {
+  color: rgb(0, 0, 0);
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+/* glowing effect */
+.card {
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }

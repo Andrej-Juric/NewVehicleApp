@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { BiArrowToBottom } from "react-icons/bi";
 import { BiArrowToTop } from "react-icons/bi";
+import "../App.css";
 
 const VehicleModelList = () => {
   //const [makes, setMakes] = useState("");
@@ -12,14 +13,67 @@ const VehicleModelList = () => {
   const [sortValue, setSortValue] = useState("");
   const sortOption = ["name"];
 
-  // funkcija za sort
+  // pageing
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // handlePageChange funkcija za modele auta
+
+  const handlePageChange = (pageNumber) => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?page=${pageNumber}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setModels(resp.item);
+        setCurrentPage(pageNumber);
+        setTotalPages(resp.totalPages);
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  // useEffect za dohvaćanje podataka pri inicijalizaciji komponente
+  useEffect(() => {
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?page=${currentPage}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setModels(resp.item);
+        console.log(resp.item);
+        console.log(resp);
+        setTotalPages(resp.totalPages);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   // handleSort funkcija
   const handleSort = (sortOrder) => {
     setSortValue(sortOrder);
     const sortParam = `name|${sortOrder}`;
     fetch(
-      `https://api.baasic.com/v1/sata/resources/VehicleModel2?sort=${sortParam}`,
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?sort=${sortParam}&page=${currentPage}&rpp=${itemsPerPage}`,
       {
         headers: {
           "X-BAASIC-API-KEY": "sata",
@@ -66,11 +120,14 @@ const VehicleModelList = () => {
   // funkcije search i reset
 
   const handleReset = () => {
-    fetch("https://api.baasic.com/v1/sata/resources/VehicleModel2/", {
-      headers: {
-        "X-BAASIC-API-KEY": "sata",
-      },
-    })
+    fetch(
+      `https://api.baasic.com/v1/sata/resources/VehicleModel2?page=${currentPage}&rpp=${itemsPerPage}`,
+      {
+        headers: {
+          "X-BAASIC-API-KEY": "sata",
+        },
+      }
+    )
       .then((resp) => {
         return resp.json();
       })
@@ -130,7 +187,7 @@ const VehicleModelList = () => {
   };
 
   // api poziv za model automobila // api call for vehicle model
-  useEffect(() => {
+  /*useEffect(() => {
     fetch("https://api.baasic.com/v1/sata/resources/VehicleModel2", {
       headers: {
         "X-BAASIC-API-KEY": "sata",
@@ -146,7 +203,7 @@ const VehicleModelList = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, []);*/
 
   return (
     <div>
@@ -160,20 +217,19 @@ const VehicleModelList = () => {
                   Add new model (+)
                 </Link>
               </div>
+
               <SearchBar
                 onSearch={handleSearch}
                 onReset={handleReset}
               ></SearchBar>
               <button
                 className="btn btn-primary"
-                style={{ margin: "10px 10px " }}
                 onClick={() => handleFilter("diesel")}
               >
                 Show diesel models
               </button>
               <button
                 className="btn btn-primary"
-                style={{ margin: "10px 10px" }}
                 onClick={() => handleFilter("petrol")}
               >
                 Show petrol models
@@ -233,6 +289,20 @@ const VehicleModelList = () => {
                   </React.Fragment>
                 </tbody>
               </table>
+              <div className="pagination-buttons">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>

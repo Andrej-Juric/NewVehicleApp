@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { BiArrowToBottom } from "react-icons/bi";
 import { BiArrowToTop } from "react-icons/bi";
+import "../App.css";
 
 const VehicleMakeList = () => {
   const [makes, setMakes] = useState("");
@@ -247,6 +248,8 @@ const VehicleMakeList = () => {
                       ))}
                   </React.Fragment>
                 </tbody>
+              </table>
+              <div className="pagination-buttons">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -259,7 +262,7 @@ const VehicleMakeList = () => {
                 >
                   Next
                 </button>
-              </table>
+              </div>
             </div>
           </div>
         </div>
