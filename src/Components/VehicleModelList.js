@@ -214,7 +214,7 @@ const VehicleModelList = () => {
             <div className="card-body">
               <div className="divbtn">
                 <Link to="model/create" className="btn btn-success">
-                  Add new model (+)
+                  Add new model
                 </Link>
               </div>
 
@@ -259,30 +259,30 @@ const VehicleModelList = () => {
                           <td>{model.fuel_type}</td>
                           <td>{model.wheel_type}</td>
                           <td>
-                            <a
+                            <button
                               onClick={() => {
                                 LoadModelEdit(model.id);
                               }}
                               className="btn btn-success"
                             >
                               Edit
-                            </a>
-                            <a
+                            </button>
+                            <button
                               onClick={() => {
                                 RemoveModelFunction(model.id);
                               }}
                               className="btn btn-danger"
                             >
                               Remove
-                            </a>
-                            <a
+                            </button>
+                            <button
                               onClick={() => {
                                 LoadModelDetail(model.id);
                               }}
                               className="btn btn-primary"
                             >
                               Details
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       ))}

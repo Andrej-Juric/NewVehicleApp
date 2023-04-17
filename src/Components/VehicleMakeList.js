@@ -190,7 +190,7 @@ const VehicleMakeList = () => {
             <div className="card-body">
               <div className="divbtn">
                 <Link to="make/create" className="btn btn-success">
-                  Add new make (+)
+                  Add new make
                 </Link>
               </div>
               <SearchBar
@@ -219,30 +219,30 @@ const VehicleMakeList = () => {
                           <td>{make.abbreviation}</td>
 
                           <td>
-                            <a
+                            <button
                               onClick={() => {
                                 LoadEdit(make.id);
                               }}
                               className="btn btn-success"
                             >
                               Edit
-                            </a>
-                            <a
+                            </button>
+                            <button
                               onClick={() => {
                                 RemoveFunction(make.id);
                               }}
                               className="btn btn-danger"
                             >
                               Remove
-                            </a>
-                            <a
+                            </button>
+                            <button
                               onClick={() => {
                                 LoadDetail(make.id);
                               }}
                               className="btn btn-primary"
                             >
                               Details
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       ))}
