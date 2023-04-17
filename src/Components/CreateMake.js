@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import makeStore from "../Common/store";
 
 const CreateMake = () => {
   const [id, setId] = useState("");
@@ -14,6 +16,8 @@ const CreateMake = () => {
       abbreviation: abrv,
       name: name,
     };
+
+    makeStore.addMake(makeData);
 
     // api poziv za make
 
@@ -116,4 +120,4 @@ const CreateMake = () => {
   );
 };
 
-export default CreateMake;
+export default observer(CreateMake);

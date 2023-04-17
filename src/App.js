@@ -9,6 +9,8 @@ import EditMake from "./Components/EditMake";
 import EditModel from "./Components/EditModel";
 import CreateModel from "./Components/CreateModel";
 import DetailsModel from "./Components/DetailsModel";
+import { observer } from "mobx-react-lite";
+
 import { GoogleLogin } from "@react-oauth/google";
 
 function App() {
@@ -83,4 +85,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);
