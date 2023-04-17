@@ -7,6 +7,7 @@ const CreateModel = () => {
   const [abrv, setAbrv] = useState("");
   const [fuelType, setFuelType] = useState("");
   const [wheelType, setWheelType] = useState("");
+  const [makeId, setMakeId] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -16,6 +17,7 @@ const CreateModel = () => {
       name: name,
       fuel_type: fuelType,
       wheel_type: wheelType,
+      makeId: makeId,
     };
 
     // api poziv za model
@@ -114,8 +116,10 @@ const CreateModel = () => {
                     <div className="form-group">
                       <label>Make ID</label>
                       <input
+                        required
+                        value={makeId}
+                        onChange={(e) => setMakeId(e.target.value)}
                         className="form-control"
-                        disabled="disabled"
                       ></input>
                     </div>
                   </div>

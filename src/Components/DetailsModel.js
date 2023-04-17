@@ -6,9 +6,10 @@ const DetailsModel = () => {
   const { modelid } = useParams();
   console.log(modelid);
   const [modelData, setModelData] = useState({});
+  const [makeData, setMakeData] = useState({});
 
   useEffect(() => {
-    fetch("https://api.baasic.com/v1/sata/resources/VehicleModel2/" + modelid, {
+    fetch(`https://api.baasic.com/v1/sata/resources/VehicleModel2/${modelid}`, {
       headers: {
         "X-BAASIC-API-KEY": "sata",
       },
@@ -18,6 +19,23 @@ const DetailsModel = () => {
       })
       .then((resp) => {
         setModelData(resp);
+        console.log(resp);
+
+        // Dohvati make data za model
+        return fetch(
+          `https://api.baasic.com/v1/sata/resources/vehicleMakes/${resp.makeId}`,
+          {
+            headers: {
+              "X-BAASIC-API-KEY": "sata",
+            },
+          }
+        );
+      })
+      .then((res) => {
+        return res.json();
+      })
+      .then((resp) => {
+        setMakeData(resp);
         console.log(resp);
       })
       .catch((err) => {
@@ -99,6 +117,20 @@ const DetailsModel = () => {
                   className="form-control-plaintext"
                   id="wheelDrive"
                   value={modelData.wheel_type}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="makeName" className="col-sm-3 col-form-label">
+                Make
+              </label>
+              <div className="col-sm-9">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="makeName"
+                  value={makeData.name}
                 />
               </div>
             </div>
