@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/NewVehicleApp/static/css/main.1d12a42e.css",
+    "main.js": "/NewVehicleApp/static/js/main.dcfa6d02.js",
+    "index.html": "/NewVehicleApp/index.html",
+    "main.1d12a42e.css.map": "/NewVehicleApp/static/css/main.1d12a42e.css.map",
+    "main.dcfa6d02.js.map": "/NewVehicleApp/static/js/main.dcfa6d02.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1d12a42e.css",
+    "static/js/main.dcfa6d02.js"
+  ]
+}
